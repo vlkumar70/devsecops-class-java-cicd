@@ -29,29 +29,15 @@ node{
 			]	
 		],
 		credentialsId: 'nexus3',
-		groupId: 'in.ashokit',
+		groupId: 'in.javacicd',
 		nexusUrl: '',
 		protocol: 'http',
-		repository: 'ashokit-release'
+		repository: 'java-cicd-release'
 		version: '1.0.0'
 	}
 }
     
-    stage('Build Image'){
-        sh 'docker build -t ashokit/mavenwebapp .'
+    stage('Deploy'){
+        
     }
-    
-    stage('Push Image'){
-        withCredentials([string(credentialsId: 'DOCKER-CREDENTIALS', variable: 'DOCKER_CREDENTIALS')]) {
-            sh 'docker login -u ashokit -p ${DOCKER_CREDENTIALS}'
-        }
-        sh 'docker push ashokit/mavenwebapp'
-    }
-    
-    stage('Deploy App'){
-        kubernetesDeploy(
-            configs: 'maven-web-app-deploy.yml',
-            kubeconfigId: 'Kube-Config'
-        )
-    }    
 }
